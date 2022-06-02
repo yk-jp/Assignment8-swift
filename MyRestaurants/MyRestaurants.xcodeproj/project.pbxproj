@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F2007EE528473BE900AA0631 /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2007EE428473BE900AA0631 /* Food.swift */; };
+		F2007EE7284747FB00AA0631 /* FoodCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2007EE6284747FB00AA0631 /* FoodCollectionViewCell.swift */; };
 		F28420132847358A0005AC3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28420122847358A0005AC3E /* AppDelegate.swift */; };
 		F28420152847358A0005AC3E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28420142847358A0005AC3E /* SceneDelegate.swift */; };
 		F284201A2847358A0005AC3E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F28420182847358A0005AC3E /* Main.storyboard */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F2007EE428473BE900AA0631 /* Food.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
+		F2007EE6284747FB00AA0631 /* FoodCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodCollectionViewCell.swift; sourceTree = "<group>"; };
 		F284200F2847358A0005AC3E /* MyRestaurants.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyRestaurants.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F28420122847358A0005AC3E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F28420142847358A0005AC3E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,7 +63,9 @@
 				F28420122847358A0005AC3E /* AppDelegate.swift */,
 				F28420142847358A0005AC3E /* SceneDelegate.swift */,
 				F28420182847358A0005AC3E /* Main.storyboard */,
+				F2007EE428473BE900AA0631 /* Food.swift */,
 				F2842026284737140005AC3E /* HomeCollectionViewController.swift */,
+				F2007EE6284747FB00AA0631 /* FoodCollectionViewCell.swift */,
 				F284201B2847358B0005AC3E /* Assets.xcassets */,
 				F284201D2847358B0005AC3E /* LaunchScreen.storyboard */,
 				F28420202847358B0005AC3E /* Info.plist */,
@@ -141,6 +147,8 @@
 				F2842027284737140005AC3E /* HomeCollectionViewController.swift in Sources */,
 				F28420132847358A0005AC3E /* AppDelegate.swift in Sources */,
 				F28420152847358A0005AC3E /* SceneDelegate.swift in Sources */,
+				F2007EE7284747FB00AA0631 /* FoodCollectionViewCell.swift in Sources */,
+				F2007EE528473BE900AA0631 /* Food.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
