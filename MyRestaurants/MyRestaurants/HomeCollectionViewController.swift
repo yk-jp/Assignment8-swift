@@ -26,9 +26,8 @@ class HomeCollectionViewController: UICollectionViewController {
         collectionView.setCollectionViewLayout(generateLayout(), animated: false)
     }
     
-    
     private func generateLayout() -> UICollectionViewLayout {
-        let spacing:CGFloat = 10.0
+        let spacing:CGFloat = 7.5
         
        let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
