@@ -32,11 +32,14 @@ class HomeCollectionViewController: UICollectionViewController {
             
             let section = self.sections[sectionIndex]
             
+            let filterSpacing = 4.0
+            let menuSpacing = 5.0
+            
             switch section {
             case .filter:
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1))
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
+                item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: filterSpacing, bottom: 0, trailing: filterSpacing)
       
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.25), heightDimension: .estimated(50))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
@@ -45,22 +48,21 @@ class HomeCollectionViewController: UICollectionViewController {
                 section.orthogonalScrollingBehavior = .continuous
                 
                 return section
-            case .menu:
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1))
-                let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.92), heightDimension: .estimated(250))
+            case .menu:
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                item.contentInsets = NSDirectionalEdgeInsets(top: menuSpacing, leading: menuSpacing, bottom: menuSpacing, trailing: menuSpacing)
+                
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(250))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
+                group.contentInsets = NSDirectionalEdgeInsets(top: menuSpacing, leading: menuSpacing, bottom: menuSpacing, trailing: menuSpacing)
                 
                 let section = NSCollectionLayoutSection(group: group)
-//                section.boundarySupplementaryItems = [topLineItem, bottomLineItem]
-                section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 0, bottom: 20, trailing: 0)
+                section.contentInsets = NSDirectionalEdgeInsets(top: menuSpacing, leading: menuSpacing, bottom: menuSpacing , trailing: menuSpacing)
                 
                 return section
             }
-            
-            
         }
     }
     
@@ -76,6 +78,7 @@ class HomeCollectionViewController: UICollectionViewController {
                 return cell
             case .menu:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FoodCollectionViewCell.reuseIdentifier, for: indexPath) as! FoodCollectionViewCell
+                cell.backgroundColor = .white
                 cell.configureCell(item.food!)
                 
                 return cell

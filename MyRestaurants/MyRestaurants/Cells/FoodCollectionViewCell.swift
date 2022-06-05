@@ -10,11 +10,11 @@ import UIKit
 class FoodCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = "foodCell"
     
-//    let imageView: UIImageView = {
-//        let imageView = UIImageView()
-//        imageView.translatesautoresizingmaskintoconstraints = false
-//        return imageView
-//    }()
+    let imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
     
     let nameLabel: UILabel = {
         let label = UILabel()
@@ -28,30 +28,34 @@ class FoodCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    let stackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.spacing = 30
-        stackView.distribution = .fillProportionally
-        stackView.alignment = .center
-        
-        return stackView
+    let descriptionStackView: UIStackView = {
+        let stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .vertical
+        stack.distribution = .fill
+        stack.alignment = .fill
+        stack.spacing = 0
+        return stack
     }()
- 
+    
   override init(frame: CGRect) {
       super.init(frame: frame)
-      
-//      self.addSubview(imageView)
-      stackView.addArrangedSubview(nameLabel)
-      stackView.addArrangedSubview(detailLabel)
-      addSubview(stackView)
 
+      descriptionStackView.addArrangedSubview(nameLabel)
+      descriptionStackView.addArrangedSubview(detailLabel)
+      
+      addSubview(imageView)
+      addSubview(descriptionStackView)
+      
       NSLayoutConstraint.activate([
-//        imageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-//        imageView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
-          
-        stackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-        stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+        imageView.topAnchor.constraint(equalTo: self.topAnchor),
+        imageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+        imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+        imageView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.7),
+        descriptionStackView.topAnchor.constraint(equalTo: imageView.bottomAnchor),
+        descriptionStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+        descriptionStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+        descriptionStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor)
       ])
   }
     
@@ -60,6 +64,12 @@ class FoodCollectionViewCell: UICollectionViewCell {
   }
 
   func configureCell(_ food: Food) {
+      if food.img == "" {
+          imageView.image = UIImage(systemName: "photo")
+      } else {
+          imageView.image = UIImage(named: food.img)
+      }
+
       nameLabel.text = food.name
       detailLabel.text = food.type
   }
