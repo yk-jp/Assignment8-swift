@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Food {
+struct Food: Hashable {
     let name: String
     let img:  String // URL later
     let type: String

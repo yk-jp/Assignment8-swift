@@ -2,93 +2,95 @@
 //  HomeCollectionViewController.swift
 //  MyRestaurants
 //
-//  Created by Yusuke K on 2022-05-31.
+//  Created by Yusuke K on 2022-06-03.
 //
 
 import UIKit
 
 
 class HomeCollectionViewController: UICollectionViewController {
-    private let reuseIdentifier = "Food"
+    enum Section {
+        case filter
+        case menu
+    }
     
+    var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
+    var sections = [Section]()
     
-    private let menuItems:[Food] = [
-        Food(name: "Chipotle", img: "chipotle", type: "", time: ["Lunch", "Dinner"],country: ["Mexican"], cost: 1),
-        Food(name: "Pokeland", img: "pokeland", type: "Seafood", time: ["Lunch", "Dinner"], country: [""],cost: 2),
-        Food(name: "CTB", img: "CTB", type: "", time: ["Breakfast", "Lunch"], country: ["American"],cost: 3),
-        Food(name: "Four Seasons", img: "four seasons", type: "", time: ["Lunch", "Dinner"], country: ["Asian", "Korean"],cost: 4),
-        Food(name: "Chick-fil-A", img: "chick-fil-a", type: "Fast Food", time: ["Lunch"], country: ["American"],cost: 5),
-        Food(name: "Aladdins", img: "", type: "", time: ["Lunch", "Dinner"],country:["Greek","Italian"], cost: 6)
-    ]
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.setCollectionViewLayout(generateLayout(), animated: false)
+        
+        collectionView.setCollectionViewLayout(createLayout(), animated: true)
+        
+        collectionView.register(FilterCollectionViewCell.self, forCellWithReuseIdentifier: FilterCollectionViewCell.reuseIdentifier)
+        collectionView.register(FoodCollectionViewCell.self, forCellWithReuseIdentifier: FoodCollectionViewCell.reuseIdentifier)
+        configureDataSource()
     }
     
-    private func generateLayout() -> UICollectionViewLayout {
-        let spacing:CGFloat = 7.5
-        
-       let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .fractionalHeight(1.0)
-        )
-
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-         item.contentInsets = NSDirectionalEdgeInsets(
-            top: spacing,
-            leading: spacing,
-            bottom: 0,
-            trailing: spacing
-        )
-
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .fractionalHeight(0.38)
-        )
-        
-        let group = NSCollectionLayoutGroup.horizontal(
-            layoutSize: groupSize,
-            subitem: item,
-            count: 2
-        )
-        
-        group.contentInsets = NSDirectionalEdgeInsets(
-            top: spacing,
-            leading: spacing,
-            bottom: spacing,
-            trailing: spacing
-        )
-        
-        let section = NSCollectionLayoutSection(group: group)
-        
-        let layout = UICollectionViewCompositionalLayout(section: section)
-        
-        return layout
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return menuItems.count
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! FoodCollectionViewCell
-        
-        let food = menuItems[indexPath.item]
-        
-        cell.nameLabel.text = food.name
-        cell.detailsLabel.text = food.type
-        
-        let imgName = food.img
-        cell.foodImg.image = imgName != "" ? UIImage(named: menuItems[indexPath.item].img) : UIImage(systemName: "photo")
-    
-        return cell
+    private func createLayout() -> UICollectionViewLayout {
+        UICollectionViewCompositionalLayout {sectionIndex, layoutEnvironment in
+            
+            let section = self.sections[sectionIndex]
+            
+            switch section {
+            case .filter:
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1))
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
+      
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.25), heightDimension: .estimated(50))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+                
+                let section = NSCollectionLayoutSection(group: group)
+                section.orthogonalScrollingBehavior = .continuous
+                
+                return section
+            case .menu:
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1))
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
+                
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.92), heightDimension: .estimated(250))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
+                
+                let section = NSCollectionLayoutSection(group: group)
+//                section.boundarySupplementaryItems = [topLineItem, bottomLineItem]
+                section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 0, bottom: 20, trailing: 0)
+                
+                return section
+            }
+            
+            
+        }
     }
     
-//     default -> 1
-//    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-//        // #warning Incomplete implementation, return the number of sections
-//        return 1
-//    }
-
+    private func configureDataSource(){
+        dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: collectionView, cellProvider:{
+            (collectionView, indexPath, item) -> UICollectionViewCell? in
+            let section = self.sections[indexPath.section]
+            switch section {
+            case .filter:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterCollectionViewCell.reuseIdentifier, for: indexPath) as! FilterCollectionViewCell
+                cell.configureCell(item.filter!)
+                
+                return cell
+            case .menu:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FoodCollectionViewCell.reuseIdentifier, for: indexPath) as! FoodCollectionViewCell
+                cell.configureCell(item.food!)
+                
+                return cell
+            }
+        })
+        
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
+        snapshot.appendSections([.filter])
+        snapshot.appendItems(Item.filterItems, toSection: .filter)
+        
+        snapshot.appendSections([.menu])
+        snapshot.appendItems(Item.menuItems, toSection: .menu)
+       
+        sections = snapshot.sectionIdentifiers
+        
+        dataSource.apply(snapshot)
+    }
 }
