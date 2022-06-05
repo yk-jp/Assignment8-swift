@@ -10,24 +10,22 @@ import UIKit
 class FilterCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = "filterCell"
     
-    let button: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .white
-        button.setTitleColor(UIColor.link, for: .normal)
-        button.layer.cornerRadius = 5
-        
-        return button
+    let label: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.backgroundColor = .white
+        label.textAlignment = .center
+        return label
     }()
- 
+    
   override init(frame: CGRect) {
       super.init(frame: frame)
       
-      self.addSubview(button)
+      self.addSubview(label)
       NSLayoutConstraint.activate([
-        button.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-        button.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-        button.widthAnchor.constraint(equalTo: self.widthAnchor)
+        label.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+        label.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+        label.widthAnchor.constraint(equalTo: self.widthAnchor)
       ])
   }
   
@@ -36,6 +34,6 @@ class FilterCollectionViewCell: UICollectionViewCell {
   }
   
   func configureCell(_ filter: Filter) {
-      button.setTitle(filter.item, for: .normal)
+      label.text = filter.item
   }
 }

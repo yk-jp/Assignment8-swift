@@ -9,13 +9,29 @@ import UIKit
 
 
 class HomeCollectionViewController: UICollectionViewController {
-    enum Section {
+    enum Section: CaseIterable {
         case filter
         case menu
     }
     
     var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
+    var filteredItemsSnapshot: NSDiffableDataSourceSnapshot<Section, Item>{
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
+        
+        snapshot.appendSections([.filter])
+        snapshot.appendSections([.menu])
+        snapshot.appendItems(Item.filterItems, toSection: .filter)
+        snapshot.appendItems(filteredItems, toSection: .menu)
+        sections = snapshot.sectionIdentifiers
+        
+        return snapshot
+    }
+    
+    var selectedFilters: Set<String> = []
+    
     var sections = [Section]()
+    
+    var filteredItems = Item.menuItems
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +62,7 @@ class HomeCollectionViewController: UICollectionViewController {
                 
                 let section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .continuous
-                
+       
                 return section
                 
             case .menu:
@@ -74,7 +90,7 @@ class HomeCollectionViewController: UICollectionViewController {
             case .filter:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterCollectionViewCell.reuseIdentifier, for: indexPath) as! FilterCollectionViewCell
                 cell.configureCell(item.filter!)
-                
+                cell.backgroundColor = . blue
                 return cell
             case .menu:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FoodCollectionViewCell.reuseIdentifier, for: indexPath) as! FoodCollectionViewCell
@@ -85,15 +101,31 @@ class HomeCollectionViewController: UICollectionViewController {
             }
         })
         
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
-        snapshot.appendSections([.filter])
-        snapshot.appendItems(Item.filterItems, toSection: .filter)
-        
-        snapshot.appendSections([.menu])
-        snapshot.appendItems(Item.menuItems, toSection: .menu)
-       
-        sections = snapshot.sectionIdentifiers
-        
-        dataSource.apply(snapshot)
+        dataSource.apply(filteredItemsSnapshot, animatingDifferences: true)
     }
+    
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? FilterCollectionViewCell else { return }
+
+        let filter: String = cell.label.text!
+        
+        if selectedFilters.contains(filter) {
+            selectedFilters.remove(filter)
+            cell.label.backgroundColor = .white
+        } else {
+            selectedFilters.insert(filter)
+            cell.label.backgroundColor = UIColor.link
+        }
+
+        print(selectedFilters)
+        filteredItems = Item.menuItems.filter{(item) in
+            let results = item.food?.country.filter{(c) in return selectedFilters.count == 0 || selectedFilters.contains(c)}
+            return results?.count != 0
+        }
+
+         dataSource.apply(filteredItemsSnapshot, animatingDifferences: true)
+    }
+    
+    
 }
