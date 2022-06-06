@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F2007EE528473BE900AA0631 /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2007EE428473BE900AA0631 /* Food.swift */; };
+		F239AC47284D856800AA33EB /* String+Trim.swift in Sources */ = {isa = PBXBuildFile; fileRef = F239AC46284D856800AA33EB /* String+Trim.swift */; };
 		F28420132847358A0005AC3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28420122847358A0005AC3E /* AppDelegate.swift */; };
 		F28420152847358A0005AC3E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28420142847358A0005AC3E /* SceneDelegate.swift */; };
 		F284201A2847358A0005AC3E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F28420182847358A0005AC3E /* Main.storyboard */; };
@@ -22,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		F2007EE428473BE900AA0631 /* Food.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
+		F239AC46284D856800AA33EB /* String+Trim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Trim.swift"; sourceTree = "<group>"; };
 		F284200F2847358A0005AC3E /* MyRestaurants.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyRestaurants.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F28420122847358A0005AC3E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F28420142847358A0005AC3E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -55,6 +57,14 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
+		F239AC45284D854A00AA33EB /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				F239AC46284D856800AA33EB /* String+Trim.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		F28420062847358A0005AC3E = {
 			isa = PBXGroup;
 			children = (
@@ -74,6 +84,7 @@
 		F28420112847358A0005AC3E /* MyRestaurants */ = {
 			isa = PBXGroup;
 			children = (
+				F239AC45284D854A00AA33EB /* Utils */,
 				F28420122847358A0005AC3E /* AppDelegate.swift */,
 				F28420142847358A0005AC3E /* SceneDelegate.swift */,
 				F29C9E13284B3946004B34C8 /* Cells */,
@@ -179,6 +190,7 @@
 			files = (
 				F29C9E17284B39B2004B34C8 /* FoodCollectionViewCell.swift in Sources */,
 				F29C9E15284B399F004B34C8 /* FilterCollectionViewCell.swift in Sources */,
+				F239AC47284D856800AA33EB /* String+Trim.swift in Sources */,
 				F29C9E11284B212E004B34C8 /* Item.swift in Sources */,
 				F28420132847358A0005AC3E /* AppDelegate.swift in Sources */,
 				F28420152847358A0005AC3E /* SceneDelegate.swift in Sources */,

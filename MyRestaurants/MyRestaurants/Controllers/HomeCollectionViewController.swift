@@ -90,7 +90,6 @@ class HomeCollectionViewController: UICollectionViewController {
             case .filter:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterCollectionViewCell.reuseIdentifier, for: indexPath) as! FilterCollectionViewCell
                 cell.configureCell(item.filter!)
-                cell.backgroundColor = . blue
                 return cell
             case .menu:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FoodCollectionViewCell.reuseIdentifier, for: indexPath) as! FoodCollectionViewCell
@@ -118,7 +117,6 @@ class HomeCollectionViewController: UICollectionViewController {
             cell.label.backgroundColor = UIColor.link
         }
 
-        print(selectedFilters)
         filteredItems = Item.menuItems.filter{(item) in
             let results = item.food?.country.filter{(c) in return selectedFilters.count == 0 || selectedFilters.contains(c)}
             return results?.count != 0
